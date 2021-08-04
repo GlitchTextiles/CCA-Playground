@@ -94,9 +94,8 @@ void settings() {
 void setup() {
   resizeCanvas();
   surface.setLocation(screen_x, screen_y);
-  cca.randomizeStates(thresholds.size());
-  
   background(palette.getSwatch(0).getColor());
+  cca.randomizeStates(thresholds.size());
 }
 
 void draw() {
