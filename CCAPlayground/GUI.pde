@@ -22,11 +22,11 @@ public class ControlFrame extends PApplet {
     surface.setSize(w, h);
     surface.setLocation(x, y);
     cp5 = new ControlP5(this);
-    //cp5.getFont().sharp();
-
     frameRate(30);
 
-    // row 0 controls
+    //---------------------------------------------
+    // Basic GUI Elements
+
     cp5.addToggle("run")
       .setPosition(grid(0), grid(0))
       .setSize(guiObjectSize, guiObjectSize)
@@ -37,7 +37,7 @@ public class ControlFrame extends PApplet {
       .plugTo(this, "runToggle")
       .setValue(0.0)
       ;
-    cp5.getController("run").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("run").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addToggle("recordSequence")
       .setPosition(grid(1), grid(0))
@@ -48,7 +48,7 @@ public class ControlFrame extends PApplet {
       .setLabel("REC")
       .plugTo(this, "recordSequence")
       ;
-    cp5.getController("recordSequence").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("recordSequence").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addButton("saveImage")
       .setPosition(grid(2), grid(0))
@@ -59,7 +59,7 @@ public class ControlFrame extends PApplet {
       .setLabel("SAVE")
       .plugTo(parent, "saveImage")
       ;
-    cp5.getController("saveImage").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("saveImage").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addButton("quit")
       .setPosition(grid(10), grid(0))
@@ -70,58 +70,58 @@ public class ControlFrame extends PApplet {
       .setLabel("QUIT")
       .plugTo(this, "exit")
       ;
-    cp5.getController("quit").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("quit").getCaptionLabel().align(CENTER, CENTER);
 
     //---------------------------------------------
-    // Size stuff
-    
-     cp5.addTextfield("typeStatesW")
+    // Size and zoom GUI Elements
+
+    cp5.addTextfield("typeCCAW")
       .setPosition(grid(0), grid(1))
       .setSize(guiObjectSize, guiObjectSize/2)
       .setColorForeground(guiForeground)
       .setColorBackground(guiBackground) 
       .setColorActive(guiActive)
-      .setLabel("enter\nstates w")
-      .plugTo(this, "typeStatesW")
+      .setLabel("enter\ncca w")
+      .plugTo(this, "typeCCAW")
       ;
 
-    cp5.addNumberbox("setStatesW")
+    cp5.addNumberbox("setCCAW")
       .setPosition(grid(1), grid(1))
       .setSize(guiObjectSize, guiObjectSize)
       .setColorForeground(guiForeground)
       .setColorBackground(guiBackground) 
       .setColorActive(guiActive)
-      .setValue(states_w)
+      .setValue(cca_w)
       .setMultiplier(-1)
       .setRange(10, 2048)
-      .setLabel("states w")
-      .plugTo(this, "setStatesW")
+      .setLabel("cca w")
+      .plugTo(this, "setCCAW")
       ;
-    cp5.getController("setStatesW").getCaptionLabel().align(ControlP5.CENTER, BOTTOM);
-    
-    cp5.addTextfield("typeStatesH")
+    cp5.getController("setCCAW").getCaptionLabel().align(CENTER, BOTTOM);
+
+    cp5.addTextfield("typeCCAH")
       .setPosition(grid(2), grid(1))
       .setSize(guiObjectSize, guiObjectSize/2)
       .setColorForeground(guiForeground)
       .setColorBackground(guiBackground) 
       .setColorActive(guiActive)
-      .setLabel("enter\nstates h")
-      .plugTo(this, "typeStatesH")
+      .setLabel("enter\ncca h")
+      .plugTo(this, "typeCCAH")
       ;
 
-    cp5.addNumberbox("setStatesH")
+    cp5.addNumberbox("setCCAH")
       .setPosition(grid(3), grid(1))
       .setSize(guiObjectSize, guiObjectSize)
       .setColorForeground(guiForeground)
       .setColorBackground(guiBackground) 
       .setColorActive(guiActive)
-      .setValue(states_h)
+      .setValue(cca_h)
       .setMultiplier(-1)
       .setRange(10, 2048)
-      .setLabel("states h")
-      .plugTo(this, "setStatesH")
+      .setLabel("cca h")
+      .plugTo(this, "setCCAH")
       ;
-    cp5.getController("setStatesH").getCaptionLabel().align(ControlP5.CENTER, BOTTOM);
+    cp5.getController("setCCAH").getCaptionLabel().align(CENTER, BOTTOM);
 
     cp5.addButton("applyResize")
       .setPosition(grid(4), grid(1))
@@ -132,7 +132,7 @@ public class ControlFrame extends PApplet {
       .setLabel("apply\nresize")
       .plugTo(parent, "applyResize")
       ;
-    cp5.getController("applyResize").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("applyResize").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addNumberbox("setZoom")
       .setPosition(grid(5), grid(1))
@@ -143,11 +143,11 @@ public class ControlFrame extends PApplet {
       .setDecimalPrecision(0)
       .setValue(zoom)
       .setMultiplier(-0.1)
-      .setRange(1.0, 10.0)
+      .setRange(1.0, 100.0)
       .setLabel("zoom")
       ;
-    cp5.getController("setZoom").getCaptionLabel().align(ControlP5.CENTER, BOTTOM);
-    
+    cp5.getController("setZoom").getCaptionLabel().align(CENTER, BOTTOM);
+
     cp5.addButton("applyZoom")
       .setPosition(grid(6), grid(1))
       .setSize(guiObjectSize, guiObjectSize)
@@ -157,7 +157,7 @@ public class ControlFrame extends PApplet {
       .setLabel("apply\nzoom")
       .plugTo(parent, "applyZoom")
       ;
-    cp5.getController("applyZoom").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("applyZoom").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addSlider("thresholdSlider")
       .setPosition(grid(3), grid(6))
@@ -169,12 +169,10 @@ public class ControlFrame extends PApplet {
       .setLabel("threshold")
       .plugTo(this, "setThreshold")
       ;
-    cp5.getController("thresholdSlider").getCaptionLabel().align(ControlP5.CENTER, CENTER);
-
-
+    cp5.getController("thresholdSlider").getCaptionLabel().align(CENTER, CENTER);
 
     //---------------------------------------------
-    // Gradient Controls
+    // Gradient GUI Elements
 
     gradientColors = cp5.addRadioButton("gradientColors")
       .setPosition(grid(2), grid(3))
@@ -198,7 +196,7 @@ public class ControlFrame extends PApplet {
       .setLabel("color\n-")
       .plugTo(this, "removeGradientColor")
       ;
-    cp5.getController("removeGradientColor").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("removeGradientColor").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addButton("addGradientColor")
       .setPosition(grid(1), grid(3))
@@ -209,7 +207,7 @@ public class ControlFrame extends PApplet {
       .setLabel("color\n+")
       .plugTo(this, "addGradientColor")
       ;
-    cp5.getController("addGradientColor").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("addGradientColor").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addButton("randomizeGradient")
       .setPosition(grid(10), grid(3))
@@ -220,43 +218,54 @@ public class ControlFrame extends PApplet {
       .setLabel("RAND\nCOLORS")
       .plugTo(this, "randomizeGradient")
       ;
-    cp5.getController("randomizeGradient").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("randomizeGradient").getCaptionLabel().align(CENTER, CENTER);
 
     //---------------------------------------------
-    // KERNEL
+    // Neighborhood GUI Elements
 
-    cp5.addButton("randomizeKernel")
+    cp5.addButton("randomizeNeighborhood")
       .setPosition(grid(0), grid(10))
       .setSize(guiObjectSize, guiObjectSize)
       .setColorForeground(guiForeground)
       .setColorBackground(guiBackground)
       .setColorActive(guiActive)
-      .setLabel("rand\nkernel")
-      .plugTo(this, "randomizeKernel")
+      .setLabel("rand\nhood")
+      .plugTo(this, "randomizeNeighborhood")
       ;
-    cp5.getController("randomizeKernel").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("randomizeNeighborhood").getCaptionLabel().align(CENTER, CENTER);
 
-    cp5.addButton("randomizeKernelMatrix")
+    cp5.addButton("randomizeNeighborhoodMatrixOrigin")
       .setPosition(grid(0), grid(11))
       .setSize(guiObjectSize, guiObjectSize)
       .setColorForeground(guiForeground)
       .setColorBackground(guiBackground)
       .setColorActive(guiActive)
-      .setLabel("rand\nmatrix")
-      .plugTo(this, "randomizeKernelMatrix")
+      .setLabel("rand\nmatrix\norigin")
+      .plugTo(this, "randomizeNeighborhoodMatrixOrigin")
       ;
-    cp5.getController("randomizeKernelMatrix").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("randomizeNeighborhoodMatrixOrigin").getCaptionLabel().align(CENTER, CENTER);
 
-    cp5.addButton("randomizeKernelOrigin")
-      .setPosition(grid(10), grid(10))
+    cp5.addButton("randomizeNeighborhoodMatrix")
+      .setPosition(grid(0), grid(12))
+      .setSize(guiObjectSize, guiObjectSize)
+      .setColorForeground(guiForeground)
+      .setColorBackground(guiBackground)
+      .setColorActive(guiActive)
+      .setLabel("rand\nmatrix")
+      .plugTo(this, "randomizeNeighborhoodMatrix")
+      ;
+    cp5.getController("randomizeNeighborhoodMatrix").getCaptionLabel().align(CENTER, CENTER);
+
+    cp5.addButton("randomizeNeighborhoodOrigin")
+      .setPosition(grid(0), grid(13))
       .setSize(guiObjectSize, guiObjectSize)
       .setColorForeground(guiForeground)
       .setColorBackground(guiBackground)
       .setColorActive(guiActive)
       .setLabel("rand\norigin")
-      .plugTo(this, "randomizeKernelOrigin")
+      .plugTo(this, "randomizeNeighborhoodOrigin")
       ;
-    cp5.getController("randomizeKernelOrigin").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("randomizeNeighborhoodOrigin").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addButton("addRow")
       .setPosition(grid(0), grid(8))
@@ -265,9 +274,9 @@ public class ControlFrame extends PApplet {
       .setColorBackground(guiBackground)
       .setColorActive(guiActive)
       .setLabel("add\nrow")
-      .plugTo(this, "kernelAddRow")
+      .plugTo(this, "neighborhoodAddRow")
       ;
-    cp5.getController("addRow").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("addRow").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addButton("removeRow")
       .setPosition(grid(0), grid(7))
@@ -276,9 +285,9 @@ public class ControlFrame extends PApplet {
       .setColorBackground(guiBackground)
       .setColorActive(guiActive)
       .setLabel("remove\nrow")
-      .plugTo(this, "kernelRemoveRow")
+      .plugTo(this, "neighborhoodRemoveRow")
       ;
-    cp5.getController("removeRow").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("removeRow").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addButton("addColumn")
       .setPosition(grid(2), grid(6))
@@ -287,9 +296,9 @@ public class ControlFrame extends PApplet {
       .setColorBackground(guiBackground)
       .setColorActive(guiActive)
       .setLabel("add\ncolumn")
-      .plugTo(this, "kernelAddColumn")
+      .plugTo(this, "neighborhoodAddColumn")
       ;
-    cp5.getController("addColumn").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("addColumn").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addButton("removeColumn")
       .setPosition(grid(1), grid(6))
@@ -298,9 +307,9 @@ public class ControlFrame extends PApplet {
       .setColorBackground(guiBackground)
       .setColorActive(guiActive)
       .setLabel("remove\ncolumn")
-      .plugTo(this, "kernelRemoveColumn")
+      .plugTo(this, "neighborhoodRemoveColumn")
       ;
-    cp5.getController("removeColumn").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("removeColumn").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addButton("decOriginR")
       .setPosition(grid(10), grid(7))
@@ -309,9 +318,9 @@ public class ControlFrame extends PApplet {
       .setColorBackground(guiBackground)
       .setColorActive(guiActive)
       .setLabel("origin\n-row")
-      .plugTo(this, "kernelDecOriginR")
+      .plugTo(this, "neighborhoodDecOriginR")
       ;
-    cp5.getController("decOriginR").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("decOriginR").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addButton("incOriginR")
       .setPosition(grid(10), grid(8))
@@ -320,9 +329,9 @@ public class ControlFrame extends PApplet {
       .setColorBackground(guiBackground)
       .setColorActive(guiActive)
       .setLabel("origin\n+row")
-      .plugTo(this, "kernelIncOriginR")
+      .plugTo(this, "neighborhoodIncOriginR")
       ;
-    cp5.getController("incOriginR").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("incOriginR").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addButton("decOriginC")
       .setPosition(grid(8), grid(6))
@@ -331,9 +340,9 @@ public class ControlFrame extends PApplet {
       .setColorBackground(guiBackground)
       .setColorActive(guiActive)
       .setLabel("origin\n-col")
-      .plugTo(this, "kernelDecOriginC")
+      .plugTo(this, "neighborhoodDecOriginC")
       ;
-    cp5.getController("decOriginC").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("decOriginC").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addButton("incOriginC")
       .setPosition(grid(9), grid(6))
@@ -342,10 +351,12 @@ public class ControlFrame extends PApplet {
       .setColorBackground(guiBackground)
       .setColorActive(guiActive)
       .setLabel("origin\n+col")
-      .plugTo(this, "kernelIncOriginC")
+      .plugTo(this, "neighborhoodIncOriginC")
       ;
-    cp5.getController("incOriginC").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("incOriginC").getCaptionLabel().align(CENTER, CENTER);
 
+    // Toggle objects are stored within the Neighborhood instance
+    // not sure if this is a bad idea, but it works for now...
     for (int r = 0; r < neighborhood.matrix.length; r++) {
       for (int c = 0; c < neighborhood.matrix[0].length; c++) {
         neighborhood.matrix[c][r] = cp5.addToggle("row"+r+"col"+c)
@@ -362,7 +373,8 @@ public class ControlFrame extends PApplet {
       }
     }
 
-    this.randomizeKernelMatrix();
+    this.randomizeNeighborhoodMatrix();
+
     //---------------------------------------------
     // State Rules
 
@@ -377,7 +389,7 @@ public class ControlFrame extends PApplet {
       .setLabel("rule\n-")
       .plugTo(this, "removeRule")
       ;
-    cp5.getController("removeRule").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("removeRule").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addButton("addRule")
       .setPosition(grid(1), grid(4))
@@ -388,7 +400,7 @@ public class ControlFrame extends PApplet {
       .setLabel("rule\n+")
       .plugTo(this, "addRule")
       ;
-    cp5.getController("addRule").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("addRule").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addButton("decRules")
       .setPosition(grid(2), grid(4))
@@ -399,7 +411,7 @@ public class ControlFrame extends PApplet {
       .setLabel("rules\n-1")
       .plugTo(this, "decRules")
       ;
-    cp5.getController("decRules").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("decRules").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addButton("incRules")
       .setPosition(grid(3), grid(4))
@@ -410,7 +422,7 @@ public class ControlFrame extends PApplet {
       .setLabel("rules\n+1")
       .plugTo(this, "incRules")
       ;
-    cp5.getController("incRules").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("incRules").getCaptionLabel().align(CENTER, CENTER);
 
     cp5.addNumberbox("setRules")
       .setPosition(grid(4), grid(4))
@@ -423,7 +435,7 @@ public class ControlFrame extends PApplet {
       .setMultiplier(-0.1)
       .setRange(0.0, 10.0)
       ;
-    cp5.getController("setRules").getCaptionLabel().align(ControlP5.CENTER, BOTTOM);
+    cp5.getController("setRules").getCaptionLabel().align(CENTER, BOTTOM);
 
     cp5.addButton("randomizeRules")
       .setPosition(grid(5), grid(4))
@@ -434,18 +446,18 @@ public class ControlFrame extends PApplet {
       .setLabel("RAND\nRULES")
       .plugTo(this, "randomizeRules")
       ;
-    cp5.getController("randomizeRules").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("randomizeRules").getCaptionLabel().align(CENTER, CENTER);
 
-    cp5.addButton("randomizeState")
+    cp5.addButton("randomizeCCA")
       .setPosition(grid(6), grid(4))
       .setSize(guiObjectSize, guiObjectSize)
       .setColorForeground(guiForeground)
       .setColorBackground(guiBackground) 
       .setColorActive(guiActive)
-      .setLabel("RAND\nSTATE")
-      .plugTo(this, "randomizeStates")
+      .setLabel("RAND\nCCA")
+      .plugTo(this, "randomizeCCA")
       ;
-    cp5.getController("randomizeState").getCaptionLabel().align(ControlP5.CENTER, CENTER);
+    cp5.getController("randomizeCCA").getCaptionLabel().align(CENTER, CENTER);
 
     randomizeGradient();
   }
@@ -454,12 +466,9 @@ public class ControlFrame extends PApplet {
     background(backgroundColor);
 
     //render the gradient
-    int start = grid(0);
-    int end = grid(11)-guiBufferSize;
-    for (int i = start; i < end; i++) {
-      stroke(gradient.getColor((i-start)/float(end-start)));
-      line(i, grid(2), i, grid(3)-guiBufferSize);
-    }
+    int gradientW = grid(11) - guiBufferSize - grid(0);
+    int gradientH = grid(1) - 2*guiBufferSize;
+    image(gradient.renderVertical(gradientW, gradientH), grid(0), grid(2));
 
     //render the neighborhood origin as a bounding box
     if ( neighborhood != null) {
@@ -471,6 +480,8 @@ public class ControlFrame extends PApplet {
     parent.redraw();
   }
 
+  //---------------------------------------------
+  // General functions
 
   public void saveImage() {
     cp5.getController("run").setValue(0.0);
@@ -480,42 +491,48 @@ public class ControlFrame extends PApplet {
   public void recordSequence(boolean _theValue) {
     record_sequence(_theValue);
   }
-  
-  public void typeStatesW(String _value) {
-    cp5.getController("setStatesW").setValue(parseInt(_value));
+
+  public void runToggle(float _value) {
+    run = _value > 0.0 ? true:false;
   }
 
-  public void typeStatesH(String _value) {
-     cp5.getController("setStatesH").setValue(parseInt(_value));
+  public void randomizeCCA() {
+    cca.randomizeStates(thresholds.size());
   }
 
-  public void setStatesW(int _value) {
-    states_w = _value;
-  }
+  //---------------------------------------------
+  // Scaling functions
 
-  public void setStatesH(int _value) {
-    states_h = _value;
+  public void typeCCAW(String _value) {
+    cp5.getController("setCCAW").setValue(parseInt(_value));
   }
-
+  public void typeCCAH(String _value) {
+    cp5.getController("setCCAH").setValue(parseInt(_value));
+  }
+  public void setCCAW(int _value) {
+    cca_w = _value;
+  }
+  public void setCCAH(int _value) {
+    cca_h = _value;
+  }
   public void setZoom(float _value) {
     tempZoom = int(_value);
   }
-
   public void applyZoom() {
     cp5.getController("run").setValue(0.0);
     zoom = tempZoom;
     resizeCanvas();
   }
-
   public void applyResize() {
     cp5.getController("run").setValue(0.0);
-    resizeStates();
+    resizeCCA();
     resizeCanvas();
   }
 
-  // Neighborhood Kernel
+  //---------------------------------------------
+  // Neighborhood functions
 
-  public void updateKernelGUI() {
+  public void updateNeighborhoodGUI() {
     for (int r = 0; r < neighborhood.matrix.length; r++) {  
       for (int c = 0; c < neighborhood.matrix[0].length; c++) {
         if (r < neighborhood.rows && c < neighborhood.cols) {
@@ -536,58 +553,63 @@ public class ControlFrame extends PApplet {
       }
     }
   }
-
-  public void kernelAddRow() {
+  public void neighborhoodAddRow() {
     neighborhood.addRow();
-    this.updateKernelGUI();
+    this.updateNeighborhoodGUI();
   }
-  public void kernelRemoveRow() {
+  public void neighborhoodRemoveRow() {
     neighborhood.removeRow();
-    this.updateKernelGUI();
+    this.updateNeighborhoodGUI();
   }
-  public void kernelAddColumn() {
+  public void neighborhoodAddColumn() {
     neighborhood.addColumn();
-    this.updateKernelGUI();
+    this.updateNeighborhoodGUI();
   }
-  public void kernelRemoveColumn() {
+  public void neighborhoodRemoveColumn() {
     neighborhood.removeColumn();
-    this.updateKernelGUI();
+    this.updateNeighborhoodGUI();
   }
-  public void kernelIncOriginC() {
+  public void neighborhoodIncOriginC() {
     neighborhood.incOriginC();
-    this.updateKernelGUI();
+    this.updateNeighborhoodGUI();
   }
-  public void kernelDecOriginC() {
+  public void neighborhoodDecOriginC() {
     neighborhood.decOriginC();
-    this.updateKernelGUI();
+    this.updateNeighborhoodGUI();
   }
-  public void kernelIncOriginR() {
+  public void neighborhoodIncOriginR() {
     neighborhood.incOriginR();
-    this.updateKernelGUI();
+    this.updateNeighborhoodGUI();
   }
-  public void kernelDecOriginR() {
+  public void neighborhoodDecOriginR() {
     neighborhood.decOriginR();
-    this.updateKernelGUI();
+    this.updateNeighborhoodGUI();
   }
-  public void randomizeKernel() {
+  public void randomizeNeighborhood() {
     neighborhood.randomize();
-    this.updateKernelGUI();
+    this.updateNeighborhoodGUI();
   }
-  public void randomizeKernelMatrix() {
+  public void randomizeNeighborhoodMatrix() {
     neighborhood.randomizeMatrix();
-    this.updateKernelGUI();
+    this.updateNeighborhoodGUI();
   }
-  public void randomizeKernelOrigin() {
+  public void randomizeNeighborhoodOrigin() {
     neighborhood.randomizeOrigin();
-    this.updateKernelGUI();
+    this.updateNeighborhoodGUI();
+  }
+  public void randomizeNeighborhoodMatrixOrigin() {
+    neighborhood.randomizeMatrix();
+    neighborhood.randomizeOrigin();
+    this.updateNeighborhoodGUI();
   }
 
+  //---------------------------------------------
+  // Gradient functions
 
-  // Gradient
-
+  // Gradient palette editor colorWheel logic
   public void gradientColors(int index) {
     if (index != -1) {
-      if (index != lastRadio && lastRadio != -1) {
+      if (index != lastRadio && lastRadio != -1) { 
         cp5.remove("ColorWheel_"+lastRadio);
         createColorWheel(index);
       } else {
@@ -599,6 +621,7 @@ public class ControlFrame extends PApplet {
     lastRadio = index;
   }
 
+  // when a colorWheel is created
   public void createColorWheel(int index) {
     float[] position = gradientColors.getPosition();
     gradientPicker = cp5.addColorWheel("ColorWheel_"+index)
@@ -610,7 +633,7 @@ public class ControlFrame extends PApplet {
       public void controlEvent(CallbackEvent theEvent) {
         color c = gradientPicker.getRGB();
         String name = theEvent.getController().getName();
-        int index = parseInt(split(name, '_')[1]);
+        int index = parseInt(split(name, '_')[1]); // the index routes the values to the appropriate place
         gradientColors.getItem(index).setColorBackground(c);
         gradient.getColorHandle(index).setColor(c);
         updatePalette();
@@ -618,13 +641,11 @@ public class ControlFrame extends PApplet {
     }
     );
   }
-
   public void createGradient(int _colors) {
     for (int i = 0; i < _colors; i++) {
       this.addGradientColor();
     }
   }
-
   public void addGradientColor() {
     gradientColors.deactivateAll();
     if (gradientPicker != null) cp5.remove(gradientPicker.getName());
@@ -635,7 +656,6 @@ public class ControlFrame extends PApplet {
       updatePalette();
     }
   }
-
   public void removeGradientColor() {
     gradientColors.deactivateAll();
     if (gradientPicker != null) cp5.remove(gradientPicker.getName());
@@ -647,46 +667,54 @@ public class ControlFrame extends PApplet {
     }
     updatePalette();
   }
-
   public void updateGradientColors() {
     for (int i = 0; i < gradient.colorHandles.size(); i++) {
       color c = gradient.getColorHandle(i).getColor();
       gradientColors.getItem(i).setColorBackground(c).setLabel("");
     }
   }
-
   public void randomizeGradient() {
     gradient.randomizeColors();
     updateGradientColors();
     updatePalette();
   }
-
-  // RULES
+  public void updatePalette() {
+    for (int i = 0; i < palette.size(); i++) {
+      color c1 = gradient.getColor(i/float(palette.size()-1));
+      color c2;
+      palette.getSwatch(i).setColor(c1);
+      if (brightness(c1) > 192) {
+        c2 = color(0);
+      } else {
+        c2 = color(255);
+      }
+      thresholds.get(i).setColorBackground(c1).setColorValue(c2);
+    }
+  }
+  
+  //---------------------------------------------
+  // Threshold/Rule Functions
 
   public void createRules(int _qty_states) {
     for (int i = 0; i < _qty_states; i++) {
       this.addRule();
     }
   }
-
   public void setRules(float value) {
     for (Numberbox n : thresholds) {
       n.setValue(int(value));
     }
   }
-
   public void decRules() {
     for (Numberbox n : thresholds) {
       n.setValue(max(n.getValue()-1, 0.0));
     }
   }
-
   public void incRules() {
     for (Numberbox n : thresholds) {
       n.setValue(n.getValue()+1);
     }
   }
-
   public void addRule() {
     if (thresholds.size() < 11) {
       thresholds.add(this.cp5.addNumberbox("rule_"+thresholds.size())
@@ -706,7 +734,6 @@ public class ControlFrame extends PApplet {
       updatePalette();
     }
   }
-
   public void removeRule() {
     if (thresholds.size() > 2) {
       Numberbox n=thresholds.get(thresholds.size()-1);
@@ -716,42 +743,12 @@ public class ControlFrame extends PApplet {
       updatePalette();
     }
   }
-
   public void randomizeRules() {
-
     for (Numberbox n : thresholds) {
       n.setValue(round(random(neighborhood.getActiveNeighbors())));
     }
   }
-
-  public void updatePalette() {
-    for (int i = 0; i < palette.size(); i++) {
-      color c1 = gradient.getColor(i/float(palette.size()-1));
-      color c2;
-      palette.getSwatch(i).setColor(c1);
-      if (brightness(c1) > 192) {
-        c2 = color(0);
-      } else {
-        c2 = color(255);
-      }
-      thresholds.get(i).setColorBackground(c1).setColorValue(c2);
-    }
-  }
-
-  public void runToggle(float _value) {
-    run = _value > 0.0 ? true:false;
-  }
-
-  public void randomizeStates() {
-    cca.randomStates(thresholds.size());
-  }
-
   public void setThreshold(float _value) {
     cca.threshold=_value;
   }
-}
-
-
-public int grid( int _pos) {
-  return gridSize * _pos + gridOffset;
 }

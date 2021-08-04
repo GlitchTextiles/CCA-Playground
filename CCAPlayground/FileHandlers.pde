@@ -17,7 +17,7 @@ public void outputSelection(File filePath) {
 
 public void record_sequence(boolean value) {
   if (value) {
-    selectFolder("Select a location and filename (no extension) to save sequence to:", "outputFolderSelection");
+    selectFolder("Select a position and filename (no extension) to save sequence to:", "outputFolderSelection");
   } else {
     record=false;
   }

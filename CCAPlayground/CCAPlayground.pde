@@ -6,22 +6,16 @@ CCA Playground
  
  Cyclical Cellular Automata (CCA) are explained here: https://en.wikipedia.org/wiki/Cyclic_cellular_automaton
  
- Some of the terminology is mixed up in this here code:
- 
- Neighborhood and neighbors are also decribed as Kernels here.
- Rules and Thresholds are used interconfusingly.
- CCA and States are a bit conflated too.
- 
- Basically, imagine a system of M number of states 0 through M-1 and a 2D grid containing them.
- This grid starts out randomized. Each state, n, in this grid is evaluated based on the state of its neighbors.
+Imagine a system comprising a 2D grid states. In this system there are a total of M finite states n0 through nM-1.
+ This grid starts out randomized. Each state, nx, in this grid is evaluated based on the state of its neighbors.
  If the number of neighbors whose state is n+1 % M is greater than a pre-defined threshold,
- then the state assumes the value n+1 % M. For each state, a different threshold can be set for each state,
- these are what are called "rules" in the CCA Playground. The neighbors are defined by a neighborhood "Kernel"
- which can have 1-9 rows and 1-9 columns, and where neighbors can be counted or ignored.
+ then the state, nx, assumes the value n+1 % M. For each state, a different threshold can be set,
+ these are what are called "rules" in the CCA Playground. A neighborhood matrix specifies the size of the
+ neighborhood, and which neighbors are to be counted or ignored.
  
  Classes at a glance:
- State - is the basic CCA engine and holds all the states and evaluation code
- Kernel - is the core of the neighborhood editor
+ CCA - is the basic CCA engine and holds all the states and evaluation code
+ Neighborhood - is the core of the neighborhood editor and defines which neighbors to count
  Gradient - allows for custom color palette creation
  Palette - is generated from the gradient
  
@@ -40,6 +34,11 @@ int guiObjectWidth = 600;
 int guiBufferSize = 10;
 int gridSize = guiObjectSize + guiBufferSize;
 int gridOffset = guiBufferSize;
+
+public int grid( int _pos) { // helper for positioning GUI elements
+  return gridSize * _pos + gridOffset;
+}
+
 // GUI color variables
 color backgroundColor = color(15);
 color guiGroupBackground = color(30);
@@ -62,8 +61,8 @@ int controlFrame_y = 0;
 int screen_x = controlFrame_w;
 int screen_y = 0;
 // Initial parameters for the size and scaling of the CCA
-int states_w = 512;
-int states_h = 512;
+int cca_w = 512;
+int cca_h = 512;
 int qty_states = 7;
 int qty_colors = 3;
 int zoom = 1;
@@ -73,8 +72,8 @@ boolean run;
 boolean record;
 int sequenceIndex = 0;
 
-States cca; // the cca core
-Kernel neighborhood; // defines the neighborhood and which neighbors to count
+CCA cca; // the cca core
+Neighborhood neighborhood; // defines the neighborhood and which neighbors to count
 Gradient gradient; // creates awesome colors and allows for some control
 Palette palette; // pulls colors from the gradient and the number of rules
 ControlFrame GUI; // holds all the fun buttons and sliders and things
@@ -84,23 +83,25 @@ ColorWheel gradientPicker; // temp use for selecting colors when editing the gra
 
 void settings() {
   size(10, 10);
-  neighborhood = new Kernel();
-  resizeStates();
-  palette = new Palette("CCA Palette");
   thresholds = new ArrayList<Numberbox>();
+  neighborhood = new Neighborhood();
+  palette = new Palette("CCA Palette");
   gradient = new Gradient();
+  resizeCCA();
   GUI = new ControlFrame(this, controlFrame_x, controlFrame_y, controlFrame_w, controlFrame_h);
 }
 
 void setup() {
-  resizeCanvas();  
+  resizeCanvas();
   surface.setLocation(screen_x, screen_y);
+  cca.randomizeStates(thresholds.size());
+  
   background(palette.getSwatch(0).getColor());
 }
 
 void draw() {
   if (run) {   
-    cca.evaluate(neighborhood.getKernelValues(), neighborhood.getOrigin(), getThresholds());
+    cca.evaluate(neighborhood.getNeighborhoodValues(), neighborhood.getOrigin(), getThresholds());
     image(cca.render(palette), 0, 0);
     if (record) {
       save(sequencePath+"/CCA_"+nf(sequenceIndex, 4)+".png");
@@ -110,11 +111,12 @@ void draw() {
 }
 
 void resizeCanvas() {
-  surface.setSize(states_w*zoom, states_h*zoom);
+  surface.setSize(cca_w*zoom, cca_h*zoom);
 }
 
-void resizeStates() {
-  cca = new States(states_w, states_h);
+void resizeCCA() {
+  cca = new CCA(cca_w, cca_h);
+  cca.randomizeStates(thresholds.size());
 }
 
 int[] getThresholds() {

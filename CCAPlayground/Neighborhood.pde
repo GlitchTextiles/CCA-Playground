@@ -1,26 +1,26 @@
-public class Kernels {
+public class Neighborhoods {
 
-  ArrayList<Kernel> kernels;
+  ArrayList<Neighborhood> neighborhoods;
 
-  Kernels() {
-    kernels = new ArrayList<Kernel>();
+  Neighborhoods() {
+    neighborhoods = new ArrayList<Neighborhood>();
   }
 
-  public Kernels addKernel() {
-    kernels.add(new Kernel());
+  public Neighborhoods addNeighborhood() {
+    neighborhoods.add(new Neighborhood());
     return this;
   }
 
-  public Kernel getKernel(int _index) {
-    if (_index < this.kernels.size()) {
-      return kernels.get(_index);
+  public Neighborhood getNeighborhood(int _index) {
+    if (_index < this.neighborhoods.size()) {
+      return neighborhoods.get(_index);
     } else {
       return null;
     }
   }
 }
 
-public class Kernel {
+public class Neighborhood {
 
   public int rows=2;
   public int cols=2;
@@ -29,7 +29,7 @@ public class Kernel {
   protected int qty_elements=9;
   public Toggle[][] matrix;
 
-  public Kernel() {
+  public Neighborhood() {
     this.matrix = new Toggle[this.qty_elements][this.qty_elements];
   }
 
@@ -90,12 +90,12 @@ public class Kernel {
     return origin;
   }
 
-  public Kernel get() {
+  public Neighborhood get() {
     return this;
   }
 
-  public Kernel copy() {
-    Kernel copy = new Kernel();
+  public Neighborhood copy() {
+    Neighborhood copy = new Neighborhood();
     copy.rows=this.rows;
     copy.cols=this.cols;
     copy.origin_r=this.origin_r;
@@ -108,7 +108,7 @@ public class Kernel {
     return copy;
   }
 
-  public boolean[][] getKernelValues() {
+  public boolean[][] getNeighborhoodValues() {
     boolean[][] values = new boolean[cols][rows];
     for (int r = 0; r < values[0].length; r++) {  
       for (int c = 0; c < values.length; c++) {
